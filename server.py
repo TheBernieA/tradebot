@@ -197,15 +197,9 @@ def close_all_trades():
         # Fetch open positions
         positions = mt5.positions_get()
         if positions is None:
-            return (
-                jsonify(
-                    {
-                        "error": "Failed to retrieve positions",
-                        "details": mt5.last_error(),
-                    }
-                ),
-                500,
-            )
+            return jsonify(
+                {"error": "Failed to retrieve positions", "details": mt5.last_error()}
+            ), 500
 
         if len(positions) == 0:
             return jsonify({"message": "No open trades to close"}), 200
@@ -220,13 +214,11 @@ def close_all_trades():
                 close_order_type = mt5.ORDER_TYPE_BUY
                 price = mt5.symbol_info_tick(position.symbol).ask
             else:
-                results.append(
-                    {
-                        "ticket": position.ticket,
-                        "status": "failed",
-                        "error": "Unknown position type",
-                    }
-                )
+                results.append({
+                    "ticket": position.ticket,
+                    "status": "failed",
+                    "error": "Unknown position type"
+                })
                 continue
 
             # Prepare request parameters to close the position
@@ -249,21 +241,17 @@ def close_all_trades():
             # Send the close request
             result = mt5.order_send(close_request)
             if result is None:
-                results.append(
-                    {
-                        "ticket": position.ticket,
-                        "status": "failed",
-                        "error": "Order send failed, no result returned",
-                    }
-                )
+                results.append({
+                    "ticket": position.ticket,
+                    "status": "failed",
+                    "error": "Order send failed, no result returned"
+                })
             elif result.retcode != mt5.TRADE_RETCODE_DONE:
-                results.append(
-                    {
-                        "ticket": position.ticket,
-                        "status": "failed",
-                        "error": f"Error Code: {result.retcode}, Comment: {result.comment}",
-                    }
-                )
+                results.append({
+                    "ticket": position.ticket,
+                    "status": "failed",
+                    "error": f"Error Code: {result.retcode}, Comment: {result.comment}"
+                })
             else:
                 results.append({"ticket": position.ticket, "status": "success"})
 

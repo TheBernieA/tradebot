@@ -151,13 +151,13 @@ async function fetchOpenTrades() {
 
     const BUY = []
     const SELL = []
-    
-    
+
+
     try {
         const response = await fetch(`${url}/get_open_trades`);
 
         const data = await response.json();
-        
+
         console.log('trades', data);
 
         if (response.ok) {
@@ -166,23 +166,26 @@ async function fetchOpenTrades() {
             const buyList = document.getElementById('buyList');
             sellList.innerHTML = '';  // Clear previous entries
             buyList.innerHTML = ''
-            
-            data.forEach(trade => {
-                if (trade.type === 'BUY') {
-                    BUY.push(trade)
-                    // console.log(SELL.length);
-                    // document.querySelector('.buyLength').innerHTML = BUY.length
-                } else {
-                    SELL.push(trade)
-                    // document.querySelector('.sellLength').innerHTML = SELL.length
-                }          
-                // const closeButton = document.createElement('button');
-                // closeButton.textContent = 'Close';
-                // closeButton.addEventListener('click', () => {
-                //     closeTrade(trade.order_id);
-                // });
-                // listItem.appendChild(closeButton);
-            });
+
+            if (data.length > 0) {
+                data.forEach(trade => {
+                    if (trade.type === 'BUY') {
+                        BUY.push(trade)
+                        // console.log(SELL.length);
+                        // document.querySelector('.buyLength').innerHTML = BUY.length
+                    } else {
+                        SELL.push(trade)
+                        // document.querySelector('.sellLength').innerHTML = SELL.length
+                    }
+                    // const closeButton = document.createElement('button');
+                    // closeButton.textContent = 'Close';
+                    // closeButton.addEventListener('click', () => {
+                    //     closeTrade(trade.order_id);
+                    // });
+                    // listItem.appendChild(closeButton);
+                });
+
+            }
 
             BUY.forEach(trade => {
                 const listItem = document.createElement('li');
