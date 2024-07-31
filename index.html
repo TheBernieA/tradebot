@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MT5 Trading Bot</title>
+    <script src="tradingBot.js" defer></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .input-group {
+        margin-bottom: 15px;
+      }
+      .input-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .input-group input,
+      .input-group select {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      button {
+        padding: 10px 15px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>MT5 Trading Bot</h1>
+      <div class="input-group">
+        <label for="loginField">MT5 Login</label>
+        <input
+          type="text"
+          id="loginField"
+          placeholder="Enter your MT5 login"
+          value="11015784"
+        />
+      </div>
+      <div class="input-group">
+        <label for="passwordField">MT5 Password</label>
+        <input
+          type="password"
+          id="passwordField"
+          placeholder="Enter your MT5 password"
+          value="BenA@1994"
+        />
+      </div>
+      <div class="input-group">
+        <label for="serverField">MT5 Server</label>
+        <select id="serverField"></select>
+      </div>
+      <div class="input-group">
+        <label for="currencyPair">Currency Pair</label>
+        <select id="currencyPair">
+          <!-- Add more currency pairs as needed -->
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="tradeType">Trade Type</label>
+        <select id="tradeType">
+          <option value="BUY">Buy</option>
+          <option value="SELL">Sell</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="lotSize">Lot Size</label>
+        <input
+          type="number"
+          id="lotSize"
+          placeholder="Enter lot size"
+          value="0.01"
+        />
+      </div>
+      <div class="input-group">
+        <label for="takeProfit">Take Profit (pips)</label>
+        <input
+          type="number"
+          id="takeProfit"
+          placeholder="Enter take profit in pips"
+          value="10"
+        />
+      </div>
+      <div class="input-group">
+        <label for="stopLoss">Stop Loss (pips)</label>
+        <input
+          type="number"
+          id="stopLoss"
+          placeholder="Enter stop loss in pips"
+          value="10"
+        />
+      </div>
+      <div class="input-group">
+        <label for="numTrades">Number of Trades</label>
+        <input
+          type="number"
+          id="numTrades"
+          placeholder="Enter number of trades"
+          value="10"
+        />
+      </div>
+      <button id="login">Login</button>
+      <button id="openTrade" disabled>Open Trade</button>
+      <button id="closeTrade" disabled>Close Trades</button>
+      <ul id="sellList">
+        <h2 class="sellLength"></h2>
+      </ul>
+      <ul id="buyList">
+        <h2 class="buyLength"></h2>
+      </ul>
+    </div>
+  </body>
+</html>
