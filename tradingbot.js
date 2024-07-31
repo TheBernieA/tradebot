@@ -134,6 +134,7 @@ async function openTrade() {
                 console.log(`Trade ${i + 1} opened successfully with order ID: ${data.order_id}`);
             }
         }
+        fetchOpenTrades();  // Refresh the list of open trades
         alert('All trades opened successfully');
     } catch (error) {
         console.error('Error:', error);
@@ -151,9 +152,8 @@ async function fetchOpenTrades() {
         return;
     }
 
-    const BUY = []
-    const SELL = []
-
+    const BUY = [];
+    const SELL = [];
 
     try {
         const response = await fetch(`${url}/get_open_trades`);
@@ -163,42 +163,50 @@ async function fetchOpenTrades() {
         console.log('trades', data);
 
         if (response.ok) {
-            // Assuming you have a dropdown or a list to display the trades
             const sellList = document.getElementById('sellList');
             const buyList = document.getElementById('buyList');
+
+            if (!sellList || !buyList) {
+                console.error('sellList or buyList element not found');
+                return;
+            }
+
             sellList.innerHTML = '';  // Clear previous entries
-            buyList.innerHTML = ''
+            buyList.innerHTML = '';
 
             if (data.length > 0) {
                 data.forEach(trade => {
                     if (trade.type === 'BUY') {
-                        BUY.push(trade)
-                        // console.log(SELL.length);
-                        // document.querySelector('.buyLength').innerHTML = BUY.length
+                        BUY.push(trade);
+                        const buyLengthElement = document.querySelector('.buyLength');
+                        if (buyLengthElement) {
+                            buyLengthElement.innerHTML = `BUY: ${BUY.length}`;
+                        } else {
+                            console.error('.buyLength element not found');
+                        }
                     } else {
-                        SELL.push(trade)
-                        // document.querySelector('.sellLength').innerHTML = SELL.length
+                        SELL.push(trade);
+                        const sellLengthElement = document.querySelector('.sellLength');
+                        if (sellLengthElement) {
+                            sellLengthElement.innerHTML = `SELL: ${SELL.length}`;
+                        } else {
+                            console.error('.sellLength element not found');
+                        }
                     }
-                    // const closeButton = document.createElement('button');
-                    // closeButton.textContent = 'Close';
-                    // closeButton.addEventListener('click', () => {
-                    //     closeTrade(trade.order_id);
-                    // });
-                    // listItem.appendChild(closeButton);
                 });
-
             }
 
             BUY.forEach(trade => {
                 const listItem = document.createElement('li');
                 listItem.textContent = `Order ID: ${trade.order_id}, Symbol: ${trade.symbol}, Volume: ${trade.volume}, Price: ${trade.price}, Type: ${trade.type}`;
                 buyList.appendChild(listItem);
-            })
+            });
+
             SELL.forEach(trade => {
                 const listItem = document.createElement('li');
                 listItem.textContent = `Order ID: ${trade.order_id}, Symbol: ${trade.symbol}, Volume: ${trade.volume}, Price: ${trade.price}, Type: ${trade.type}`;
                 sellList.appendChild(listItem);
-            })
+            });
         } else {
             alert(`Error: ${data.error}`);
         }
