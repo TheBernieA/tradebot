@@ -5,6 +5,7 @@ const url = 'http://localhost:5000'
 // let orderIds = []; // Array to store order IDs
 
 const currencyPairs = [
+    { value: 'USDCAD', label: 'USD/CAD' },
     { value: 'EURUSD', label: 'EUR/USD' },
     { value: 'GBPUSD', label: 'GBP/USD' },
     { value: 'USDJPY', label: 'USD/JPY' },
@@ -26,6 +27,7 @@ currencyPairs.forEach(pair => {
 const servers = [
     { value: 'ICMarketsSC-MT5-4', label: 'ICMarketsSC-MT5-4' },
     { value: 'ICMarketsUK-MT5-2', label: 'ICMarketsUK-MT5-2' },
+    { value: 'MetaQuotes-Demo', label: 'MetaQuotes-Demo' },
 ]
 
 servers.forEach(server => {

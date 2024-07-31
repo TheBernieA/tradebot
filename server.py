@@ -223,7 +223,8 @@ def close_all_trades():
 
             # Prepare request parameters to close the position
             close_request = {
-                "action": mt5.TRADE_ACTION_DEAL,  # Ensure this is correct for closing trades
+                "action": mt5.TRADE_ACTION_DEAL,
+                "position": position.ticket,
                 "symbol": position.symbol,
                 "volume": position.volume,
                 "type": close_order_type,
